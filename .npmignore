@@ -1,0 +1,16 @@
+.git
+.idea
+.nyc_output
+DEV_ONLY
+node_modules
+src
+test
+webpack
+.babelrc
+.eslintrc
+.gitignore
+.npmignore
+webpack.config.js
+webpack.config.minified.js
+webpack.config.dev.js
+yarn.lock
