@@ -52,8 +52,7 @@ import React, {
   PureComponent
 } from 'react';
 import {
-  localActions,
-  getLocalStorage
+  localActions
 } from 'redux-browser-storage';
 import {
   connect
