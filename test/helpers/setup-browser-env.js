@@ -7,6 +7,9 @@ const createMockStorage = () => {
   let values = {};
 
   return {
+    clear() {
+      values = {};
+    },
     getItem(key) {
       return values[key];
     },

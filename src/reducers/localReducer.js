@@ -16,13 +16,14 @@ import {
 import {
   createHandleClearValues,
   createHandleDeleteValues,
-  createHandleSetValues
+  createHandleSetValues,
+  getLocalStorage
 } from '../utils';
 
-export const INITIAL_STATE = {};
+export const INITIAL_STATE = getLocalStorage();
 
 export default handleActions({
-  [ACTION_TYPES.CLEAR_LOCAL_VALUES]: createHandleClearValues(INITIAL_STATE, LOCAL_STORAGE_KEY, LOCAL_STORAGE_TYPE),
+  [ACTION_TYPES.CLEAR_LOCAL_VALUES]: createHandleClearValues(LOCAL_STORAGE_KEY, LOCAL_STORAGE_TYPE),
   [ACTION_TYPES.DELETE_LOCAL_VALUES]: createHandleDeleteValues(LOCAL_STORAGE_KEY, LOCAL_STORAGE_TYPE),
   [ACTION_TYPES.SET_LOCAL_VALUES]: createHandleSetValues(LOCAL_STORAGE_KEY, LOCAL_STORAGE_TYPE)
 }, INITIAL_STATE);

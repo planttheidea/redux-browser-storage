@@ -99,13 +99,10 @@ test('if setStateInStorage will set the state in the storage specified', (t) => 
 });
 
 test('if createHandleClearValues will set the initial state passed both in the reducer and in storage', (t) => {
-  const initialState = {
-    foo: 'bar'
-  };
   const storageKey = constants.LOCAL_STORAGE_KEY;
   const storageType = constants.LOCAL_STORAGE_TYPE;
 
-  const handleClearValues = utils.createHandleClearValues(initialState, storageKey, storageType);
+  const handleClearValues = utils.createHandleClearValues(storageKey, storageType);
 
   t.true(_.isFunction(handleClearValues));
 
@@ -125,9 +122,9 @@ test('if createHandleClearValues will set the initial state passed both in the r
   ] = args;
 
   t.is(key, storageKey);
-  t.is(value, JSON.stringify(initialState));
+  t.is(value, JSON.stringify({}));
 
-  t.deepEqual(result, initialState);
+  t.deepEqual(result, {});
 
   stub.restore();
 });

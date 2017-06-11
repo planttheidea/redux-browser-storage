@@ -16,12 +16,6 @@ import {
   sessionReducer
 } from './reducers';
 
-// utils
-import {
-  getLocalStorage,
-  getSessionStorage
-} from './utils';
-
 export {clearLocalValues};
 export {clearSessionValues};
 export {deleteLocalValues};
@@ -35,16 +29,11 @@ export {sessionActions};
 export {localReducer};
 export {sessionReducer};
 
-export {getLocalStorage};
-export {getSessionStorage};
-
 export default {
   clearLocalValues,
   clearSessionValues,
   deleteLocalValues,
   deleteSessionValues,
-  getLocalStorage,
-  getSessionStorage,
   localActions,
   localReducer,
   sessionActions,

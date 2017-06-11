@@ -10,22 +10,8 @@ import {
 // actions
 import {
   localActions,
-  getLocalStorage,
-  getSessionStorage,
   sessionActions
 } from '../src';
-
-const createComponentWillMount = (instance) => {
-  return () => {
-    const {
-      setLocalValues,
-      setSessionValues
-    } = instance.props;
-
-    setLocalValues(getLocalStorage());
-    setSessionValues(getSessionStorage());
-  };
-};
 
 const createOnClickClearValues = (instance, type) => {
   return () => {
@@ -101,9 +87,6 @@ class App extends PureComponent {
     local: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired
   };
-
-  // lifecycle methods
-  componentWillMount = createComponentWillMount(this);
 
   // instance values
   localKeyElement = null;

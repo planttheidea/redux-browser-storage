@@ -16,13 +16,14 @@ import {
 import {
   createHandleClearValues,
   createHandleDeleteValues,
-  createHandleSetValues
+  createHandleSetValues,
+  getSessionStorage
 } from '../utils';
 
-export const INITIAL_STATE = {};
+export const INITIAL_STATE = getSessionStorage();
 
 export default handleActions({
-  [ACTION_TYPES.CLEAR_SESSION_VALUES]: createHandleClearValues(INITIAL_STATE, SESSION_STORAGE_KEY,
+  [ACTION_TYPES.CLEAR_SESSION_VALUES]: createHandleClearValues(SESSION_STORAGE_KEY,
     SESSION_STORAGE_TYPE),
   [ACTION_TYPES.DELETE_SESSION_VALUES]: createHandleDeleteValues(SESSION_STORAGE_KEY, SESSION_STORAGE_TYPE),
   [ACTION_TYPES.SET_SESSION_VALUES]: createHandleSetValues(SESSION_STORAGE_KEY, SESSION_STORAGE_TYPE)

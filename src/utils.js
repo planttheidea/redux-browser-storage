@@ -22,10 +22,10 @@ import {
  */
 export const createGetStorage = (storageType, storageKey) => {
   return () => {
-    const storage = window[storageType].getItem(storageKey);
+    const storageJson = window[storageType].getItem(storageKey);
 
     try {
-      return storage ? JSON.parse(storage) : {};
+      return storageJson ? JSON.parse(storageJson) : {};
     } catch (error) {
       return {};
     }
@@ -52,16 +52,13 @@ export const setStateInStorage = (storageType, storageKey, newState) => {
  * @description
  * create the handler for clearing of values in storage
  *
- * @param {Object} initialState the initial state to revert to
  * @param {string} storageKey the key used in local storage
  * @param {string} storageType the type of storage to retrieve
  * @returns {function(): Object} the clear values handler
  */
-export const createHandleClearValues = (initialState, storageKey, storageType) => {
+export const createHandleClearValues = (storageKey, storageType) => {
   return () => {
-    const newState = {
-      ...initialState
-    };
+    const newState = {};
 
     setStateInStorage(storageType, storageKey, newState);
 
