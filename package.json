@@ -1,5 +1,21 @@
 {
   "author": "tony.quetano@planttheidea.com",
+  "ava": {
+    "babel": "inherit",
+    "concurrency": 5,
+    "failFast": true,
+    "files": [
+      "test/**/*.js"
+    ],
+    "require": [
+      "babel-register",
+      "./test/helpers/setup-browser-env.js"
+    ],
+    "source": [
+      "src/**/*.js"
+    ],
+    "verbose": true
+  },
   "bugs": {
     "url": "https://github.com/planttheidea/redux-browser-storage/issues"
   },
@@ -64,7 +80,9 @@
     "build:minified": "NODE_ENV=production webpack --progress --colors --config=webpack/webpack.config.minified.js",
     "dev": "NODE_ENV=development webpack-dashboard -p 3210 -m -- webpack-dev-server --config=webpack/webpack.config.dev.js",
     "start": "npm run dev",
-    "test": "NODE_PATH=. NODE_ENV=test ava"
+    "test": "NODE_PATH=. NODE_ENV=test ava",
+    "test:coverage": "nyc npm test",
+    "test:watch": "NODE_PATH=. NODE_ENV=test ava --watch"
   },
   "version": "1.0.0"
 }

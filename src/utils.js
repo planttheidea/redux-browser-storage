@@ -24,7 +24,11 @@ export const createGetStorage = (storageType, storageKey) => {
   return () => {
     const storage = window[storageType].getItem(storageKey);
 
-    return storage ? JSON.parse(storage) : {};
+    try {
+      return storage ? JSON.parse(storage) : {};
+    } catch (error) {
+      return {};
+    }
   };
 };
 
@@ -36,7 +40,7 @@ export const createGetStorage = (storageType, storageKey) => {
  *
  * @param {string} storageType the type of storage to retrieve
  * @param {string} storageKey the key used in local storage
- * @param {Object} newState the new state value to store
+ * @param {Object} newState the new state value to storewindow
  */
 export const setStateInStorage = (storageType, storageKey, newState) => {
   window[storageType].setItem(storageKey, JSON.stringify(newState));
@@ -78,9 +82,7 @@ export const createHandleClearValues = (initialState, storageKey, storageType) =
 export const createHandleDeleteValues = (storageKey, storageType) => {
   return (state, {payload}) => {
     const keys = Array.isArray(payload) ? payload : [payload];
-    const newState = keys.reduce((newState, path) => {
-      return omit(path, newState);
-    }, state);
+    const newState = omit(keys, state);
 
     setStateInStorage(storageType, storageKey, newState);
 
