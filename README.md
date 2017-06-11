@@ -1,6 +1,6 @@
 # redux-browser-storage
 
-Use redux to manage localStorage and sessionStorage data
+Use redux to manage specific data saved in either localStorage or sessionStorage
 
 ## Table of contents
 * [Installation](#installation)
@@ -26,8 +26,9 @@ $ npm i redux-browser-storage --save
 
 ## Usage
 
+Include the storage type(s) you want into your standard store creation, assigning to any name you would like.
+
 ```javascript
-// store.js
 import {
   combineReducers,
   createStore
@@ -42,8 +43,11 @@ const reducers = combineReducers({
 });
 
 export default createStore(reducers);
+```
 
-// App.js
+Connect your component to redux, and when you want to update the values use the provided redux actions.
+
+```javascript
 import React, {
   PureComponent
 } from 'react';
@@ -67,23 +71,26 @@ const mapDispatchToProps = {
 
 @connect(mapStateToProps, mapDispatchToProps)
 class App extends PureComponent {
-  componentWillMount() {
+  onClickButton = () => {
     this.props.setLocalValues({
-      foo: 'bar'
+      count: this.props.count + 1
     });
-  }
+  };
 
   render() {
-    const foo = this.props.local.foo; // bar
-
     return (
-      <div>
-        {foo}
-      </div>
+      <button
+        onClick={this.onClickButton}
+        type="button"
+      >
+        Count: {this.props.local.count || 0}
+      </button>
     )
   }
 }
 ```
+
+All data values in your reducer are automatically synced to their respective browser storage, and the reducer's initial state is based off of existing values in that storage, so all saved values are automatically rehydrated on page load.
 
 ## API
 
@@ -105,7 +112,7 @@ onClickClear = () => {
 
 `deleteLocalValues(keys: (Array<string>|string))`
 
-Deletes the value(s) at the location of `keys` in `localStorage`. Nested values are allowed by use of standard dot or bracket notation.
+Deletes the value(s) at the location of `keys` in `localStorage`. Nested values are allowed by use of dot or bracket notation.
 
 ```javascript
 // standard
@@ -122,7 +129,7 @@ deleteLocalValues(['foo', 'bar[0].baz']);
 
 `setLocalValues(values: Object)`
 
-Sets the value(s) in `localStorage` based on the keys of the object passed. Nested values are allowed by use of standard dot or bracket notation.
+Sets the value(s) in `localStorage` based on the keys of the object passed. Nested values are allowed by use of dot or bracket notation.
 
 ```javascript
 // standard
@@ -158,7 +165,7 @@ clearSessionValues();
 
 `deleteSessionValues(keys: (Array<string>|string))`
 
-Deletes the value(s) at the location of `keys` in `sessionStorage`. Nested values are allowed by use of standard dot or bracket notation.
+Deletes the value(s) at the location of `keys` in `sessionStorage`. Nested values are allowed by use of dot or bracket notation.
 
 ```javascript
 // standard
@@ -175,7 +182,7 @@ deleteSessionValues(['foo', 'bar[0].baz']);
 
 `setSessionValues(values: Object)`
 
-Sets the value(s) in `sessionStorage` based on the keys of the object passed. Nested values are allowed by use of standard dot or bracket notation.
+Sets the value(s) in `sessionStorage` based on the keys of the object passed. Nested values are allowed by use of dot or bracket notation.
 
 ```javascript
 // standard
