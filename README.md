@@ -72,7 +72,7 @@ const mapDispatchToProps = {
 class App extends PureComponent {
   onClickButton = () => {
     this.props.setLocalValues({
-      count: this.props.count + 1
+      count: this.props.local.count + 1
     });
   };
 
