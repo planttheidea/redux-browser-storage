@@ -8,11 +8,7 @@ import * as localActionsExports from 'src/actions/localActions';
 import * as sessionActionsExports from 'src/actions/sessionActions';
 
 test('if every localActions import that is an action has a corresponding export', (t) => {
-  const {
-    __esModule: moduleDeclarationIgnored,
-    ACTION_TYPES: actionTypesIgnored,
-    ...localActions
-  } = localActionsExports;
+  const {__esModule: moduleDeclarationIgnored, ACTION_TYPES: actionTypesIgnored, ...localActions} = localActionsExports;
 
   Object.keys(localActions).forEach((key) => {
     t.true(_.isFunction(actions[key]));
@@ -45,6 +41,6 @@ test('if the default export has all the actions namespaced', (t) => {
 
   t.deepEqual(actions.default, {
     localActions,
-    sessionActions
+    sessionActions,
   });
 });

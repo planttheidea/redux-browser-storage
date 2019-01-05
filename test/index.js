@@ -32,10 +32,7 @@ test('if each actions import has a reflective export', (t) => {
 });
 
 test('if each reducers import has a reflective export', (t) => {
-  const {
-    localReducer,
-    sessionReducer
-  } = reducersExports;
+  const {localReducer, sessionReducer} = reducersExports;
 
   t.is(index.localReducer, localReducer);
   t.is(index.sessionReducer, sessionReducer);

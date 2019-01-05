@@ -1,18 +1,18 @@
 // external dependencies
 import {
   combineReducers,
-  createStore
+  createStore,
 } from 'redux';
 
 // reducers
 import {
   localReducer,
-  sessionReducer
+  sessionReducer,
 } from '../src';
 
 const reducers = combineReducers({
   local: localReducer,
-  session: sessionReducer
+  session: sessionReducer,
 });
 
 export default createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

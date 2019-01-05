@@ -1,14 +1,33 @@
 {
-  "presets": [
-    ["env", {
-      "loose": true,
-      "targets": {
-        "browsers": [
-          "last 2 versions",
-          "ie 11"
+  "env": {
+    "lib": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "loose": true
+          }
         ]
+      ]
+    },
+    "test": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "loose": true
+          }
+        ]
+      ]
+    }
+  },
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "loose": true,
+        "modules": false
       }
-    }],
-    "stage-2"
+    ]
   ]
 }

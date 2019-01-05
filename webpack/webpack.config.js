@@ -9,61 +9,39 @@ const ROOT = path.join(__dirname, '..');
 module.exports = {
   devtool: '#source-map',
 
-  entry: [
-    path.join(ROOT, 'src', 'index.js')
-  ],
+  entry: [path.resolve(ROOT, 'src', 'index.js')],
+
+  mode: 'development',
 
   module: {
     rules: [
       {
         enforce: 'pre',
-        include: [
-          path.join(ROOT, 'src')
-        ],
+        include: [path.resolve(ROOT, 'src')],
         loader: 'eslint-loader',
         options: {
           configFile: '.eslintrc',
           failOnError: true,
           failOnWarning: false,
-          formatter: eslintFriendlyFormatter
+          formatter: require('eslint-friendly-formatter'),
         },
-        test: /\.js$/
-      }, {
-        include: [
-          path.join(ROOT, 'src')
-        ],
+        test: /\.js$/,
+      },
+      {
+        include: [path.resolve(ROOT, 'src'), path.resolve(ROOT, 'DEV_ONLY')],
         loader: 'babel-loader',
-        options: {
-          babelrc: false,
-          presets: [
-            ['env', {
-              loose: true,
-              modules: false,
-              targets: {
-                browsers: [
-                  'last 2 versions',
-                  'ie 11'
-                ]
-              }
-            }],
-            'stage-2'
-          ]
-        },
-        test: /\.js$/
-      }
-    ]
+        test: /\.js$/,
+      },
+    ],
   },
 
   output: {
     filename: 'redux-browser-storage.js',
     library: 'ReduxBrowserStorage',
+    libraryTarget: 'umd',
     path: path.join(ROOT, 'dist'),
-    umdNamedDefine: true
+    umdNamedDefine: true,
   },
 
-  plugins: [
-    new webpack.EnvironmentPlugin([
-      'NODE_ENV'
-    ])
-  ]
+  plugins: [new webpack.EnvironmentPlugin(['NODE_ENV'])],
 };
