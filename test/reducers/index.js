@@ -14,6 +14,6 @@ test('if all reducers have a corresponding export', (t) => {
 test('if the default export has all the reducers', (t) => {
   t.deepEqual(reducers.default, {
     localReducer,
-    sessionReducer
+    sessionReducer,
   });
 });

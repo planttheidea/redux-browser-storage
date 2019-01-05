@@ -15,7 +15,7 @@ const createMockStorage = () => {
     },
     setItem(key, value) {
       values[key] = value;
-    }
+    },
   };
 };
 

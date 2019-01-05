@@ -9,7 +9,7 @@ import * as constants from 'src/constants';
 
 test('if createGetStorage will return the value in state if the key exists', (t) => {
   const object = {
-    foo: 'bar'
+    foo: 'bar',
   };
   const storageKey = constants.LOCAL_STORAGE_KEY;
   const storageType = constants.LOCAL_STORAGE_TYPE;
@@ -72,7 +72,7 @@ test('if createGetStorage will return an empty object if parsing the result thro
 
 test('if setStateInStorage will set the state in the storage specified', (t) => {
   const object = {
-    foo: 'bar'
+    foo: 'bar',
   };
   const storageKey = constants.LOCAL_STORAGE_KEY;
   const storageType = constants.LOCAL_STORAGE_TYPE;
@@ -87,10 +87,7 @@ test('if setStateInStorage will set the state in the storage specified', (t) => 
 
   t.is(args.length, 2);
 
-  const [
-    key,
-    value
-  ] = args;
+  const [key, value] = args;
 
   t.is(key, storageKey);
   t.is(value, JSON.stringify(object));
@@ -116,10 +113,7 @@ test('if createHandleClearValues will set the initial state passed both in the r
 
   t.is(args.length, 2);
 
-  const [
-    key,
-    value
-  ] = args;
+  const [key, value] = args;
 
   t.is(key, storageKey);
   t.is(value, JSON.stringify({}));
@@ -139,18 +133,18 @@ test('if createHandleDeleteValues creates a reducer that will remove the key fro
 
   const currentState = {
     foo: {
-      bar: 'baz'
-    }
+      bar: 'baz',
+    },
   };
   const action = {
-    payload: 'foo.bar'
+    payload: 'foo.bar',
   };
 
   const stub = sinon.stub(window[storageType], 'setItem');
 
   const result = handleDeleteValues(currentState, action);
   const expectedResult = {
-    foo: {}
+    foo: {},
   };
 
   t.true(stub.calledOnce);
@@ -158,10 +152,7 @@ test('if createHandleDeleteValues creates a reducer that will remove the key fro
   const args = stub.firstCall.args;
 
   t.is(args.length, 2);
-  t.deepEqual(args, [
-    storageKey,
-    JSON.stringify(expectedResult)
-  ]);
+  t.deepEqual(args, [storageKey, JSON.stringify(expectedResult)]);
 
   stub.restore();
 
@@ -177,31 +168,37 @@ test('if createHandleDeleteValues creates a reducer that will remove the keys fr
   t.true(_.isFunction(handleDeleteValues));
 
   const currentState = {
+    bar: 'bar',
     foo: 'foo',
-    bar: 'bar'
   };
   const action = {
-    payload: ['foo', 'bar']
+    payload: ['foo', 'bar'],
   };
 
   const stub = sinon.stub(window[storageType], 'setItem');
 
   const result = handleDeleteValues(currentState, action);
-  const expectedResult = {};
 
-  t.true(stub.calledOnce);
+  t.true(stub.calledTwice);
 
-  const args = stub.firstCall.args;
+  const firstArgs = stub.firstCall.args;
 
-  t.is(args.length, 2);
-  t.deepEqual(args, [
+  t.is(firstArgs.length, 2);
+  t.deepEqual(firstArgs, [
     storageKey,
-    JSON.stringify(expectedResult)
+    JSON.stringify({
+      bar: 'bar',
+    }),
   ]);
+
+  const secondArgs = stub.secondCall.args;
+
+  t.is(secondArgs.length, 2);
+  t.deepEqual(secondArgs, [storageKey, JSON.stringify({})]);
 
   stub.restore();
 
-  t.deepEqual(result, expectedResult);
+  t.deepEqual(result, {});
 });
 
 test('if createHandleSetValues creates a reducer that will add the items in state passed and return it', (t) => {
@@ -213,12 +210,12 @@ test('if createHandleSetValues creates a reducer that will add the items in stat
   t.true(_.isFunction(handlSetValues));
 
   const currentState = {
-    foo: 'foo'
+    foo: 'foo',
   };
   const action = {
     payload: {
-      bar: 'bar'
-    }
+      bar: 'bar',
+    },
   };
 
   const stub = sinon.stub(window[storageType], 'setItem');
@@ -226,7 +223,7 @@ test('if createHandleSetValues creates a reducer that will add the items in stat
   const result = handlSetValues(currentState, action);
   const expectedResult = {
     ...currentState,
-    ...action.payload
+    ...action.payload,
   };
 
   t.true(stub.calledOnce);
@@ -234,10 +231,7 @@ test('if createHandleSetValues creates a reducer that will add the items in stat
   const args = stub.firstCall.args;
 
   t.is(args.length, 2);
-  t.deepEqual(args, [
-    storageKey,
-    JSON.stringify(expectedResult)
-  ]);
+  t.deepEqual(args, [storageKey, JSON.stringify(expectedResult)]);
 
   stub.restore();
 

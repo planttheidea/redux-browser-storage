@@ -7,5 +7,5 @@ export {sessionReducer};
 
 export default {
   localReducer,
-  sessionReducer
+  sessionReducer,
 };

@@ -1,91 +1,70 @@
 // external dependencies
 import PropTypes from 'prop-types';
-import React, {
-  PureComponent
-} from 'react';
-import {
-  connect
-} from 'react-redux';
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
 
 // actions
 import {
   localActions,
-  sessionActions
+  sessionActions,
 } from '../src';
 
-const createOnClickClearValues = (instance, type) => {
-  return () => {
-    const {
-      clearLocalValues,
-      clearSessionValues
-    } = instance.props;
+const createOnClickClearValues = (instance, type) => () => {
+  const {clearLocalValues, clearSessionValues} = instance.props;
 
-    const action = type === 'local' ? clearLocalValues : clearSessionValues;
+  const action = type === 'local' ? clearLocalValues : clearSessionValues;
 
-    action();
-  };
+  action();
 };
 
-const createOnClickDeleteValue = (instance, type) => {
-  return (event) => {
-    const {
-      deleteLocalValues,
-      deleteSessionValues
-    } = instance.props;
+const createOnClickDeleteValue = (instance, type) => (event) => {
+  const {deleteLocalValues, deleteSessionValues} = instance.props;
 
-    const key = event.currentTarget.dataset.key;
-    const action = type === 'local' ? deleteLocalValues : deleteSessionValues;
+  const key = event.currentTarget.dataset.key;
+  const action = type === 'local' ? deleteLocalValues : deleteSessionValues;
 
-    action(key);
-  };
+  action(key);
 };
 
-const createOnClickSetValue = (instance, type) => {
-  return () => {
-    const {
-      setLocalValues,
-      setSessionValues
-    } = instance.props;
+const createOnClickSetValue = (instance, type) => () => {
+  const {setLocalValues, setSessionValues} = instance.props;
 
-    const keyElement = instance[`${type}KeyElement`];
-    const valueElement = instance[`${type}ValueElement`];
-    const action = type === 'local' ? setLocalValues : setSessionValues;
+  const keyElement = instance[`${type}KeyElement`];
+  const valueElement = instance[`${type}ValueElement`];
+  const action = type === 'local' ? setLocalValues : setSessionValues;
 
-    action({
-      [keyElement.value]: valueElement.value
-    });
+  action({
+    [keyElement.value]: valueElement.value,
+  });
 
-    keyElement.value = '';
-    valueElement.value = '';
+  keyElement.value = '';
+  valueElement.value = '';
 
-    keyElement.focus();
-  };
+  keyElement.focus();
 };
 
-const createSetRef = (instance, name) => {
-  return (element) => {
-    instance[name] = element;
-  };
+const createSetRef = (instance, name) => (element) => {
+  instance[name] = element;
 };
 
 const DELETE_BUTTON_STYLE = {
-  marginLeft: 5
+  marginLeft: 5,
 };
 
 const SECTION_CONTAINER_STYLE = {
   display: 'inline-block',
   verticalAlign: 'top',
-  width: '50%'
+  width: '50%',
 };
 
 const SPACING_STYLE = {
-  marginTop: 15
+  marginTop: 15,
 };
 
 class App extends PureComponent {
   static propTypes = {
     local: PropTypes.object.isRequired,
-    session: PropTypes.object.isRequired
+    session: PropTypes.object.isRequired,
   };
 
   // instance values
@@ -107,16 +86,11 @@ class App extends PureComponent {
   setSessionValueElementRef = createSetRef(this, 'sessionValueElement');
 
   render() {
-    const {
-      local,
-      session
-    } = this.props;
+    const {local, session} = this.props;
 
     return (
       <div>
-        <h1>
-          App
-        </h1>
+        <h1>App</h1>
 
         <div style={SPACING_STYLE}>
           <button
@@ -135,9 +109,7 @@ class App extends PureComponent {
         </div>
 
         <div style={SECTION_CONTAINER_STYLE}>
-          <h3>
-            Set in local
-          </h3>
+          <h3>Set in local</h3>
 
           <div style={SPACING_STYLE}>
             <input
@@ -163,29 +135,24 @@ class App extends PureComponent {
           </div>
 
           <div style={SPACING_STYLE}>
-            {Object.keys(local).map((key) => {
-              return (
-                <div key={key}>
-                  <b>{key}:</b> {JSON.stringify(local[key])}
-
-                  <button
-                    data-key={key}
-                    onClick={this.onClickDeleteValueInLocal}
-                    style={DELETE_BUTTON_STYLE}
-                    type="button"
-                  >
-                    Delete
-                  </button>
-                </div>
-              );
-            })}
+            {Object.keys(local).map((key) => (
+              <div key={key}>
+                <b>{key}:</b> {JSON.stringify(local[key])}
+                <button
+                  data-key={key}
+                  onClick={this.onClickDeleteValueInLocal}
+                  style={DELETE_BUTTON_STYLE}
+                  type="button"
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
           </div>
         </div>
 
         <div style={SECTION_CONTAINER_STYLE}>
-          <h3>
-            Set in session
-          </h3>
+          <h3>Set in session</h3>
 
           <div style={SPACING_STYLE}>
             <input
@@ -211,22 +178,19 @@ class App extends PureComponent {
           </div>
 
           <div style={SPACING_STYLE}>
-            {Object.keys(session).map((key) => {
-              return (
-                <div key={key}>
-                  <b>{key}:</b> {JSON.stringify(session[key])}
-
-                  <button
-                    data-key={key}
-                    onClick={this.onClickDeleteValueInSession}
-                    style={DELETE_BUTTON_STYLE}
-                    type="button"
-                  >
-                    Delete
-                  </button>
-                </div>
-              );
-            })}
+            {Object.keys(session).map((key) => (
+              <div key={key}>
+                <b>{key}:</b> {JSON.stringify(session[key])}
+                <button
+                  data-key={key}
+                  onClick={this.onClickDeleteValueInSession}
+                  style={DELETE_BUTTON_STYLE}
+                  type="button"
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -240,13 +204,16 @@ const mapStateToProps = ({local, session}) => {
 
   return {
     local,
-    session
+    session,
   };
 };
 
 const mapDispatchToProps = {
   ...localActions,
-  ...sessionActions
+  ...sessionActions,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

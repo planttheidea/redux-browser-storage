@@ -7,13 +7,13 @@ import {
   localActions,
   sessionActions,
   setLocalValues,
-  setSessionValues
+  setSessionValues,
 } from './actions';
 
 // reducers
 import {
   localReducer,
-  sessionReducer
+  sessionReducer,
 } from './reducers';
 
 export {clearLocalValues};
@@ -39,5 +39,5 @@ export default {
   sessionActions,
   sessionReducer,
   setLocalValues,
-  setSessionValues
+  setSessionValues,
 };

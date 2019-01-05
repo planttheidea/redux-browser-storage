@@ -2,12 +2,12 @@
 import {
   clearLocalValues,
   deleteLocalValues,
-  setLocalValues
+  setLocalValues,
 } from './localActions';
 import {
   clearSessionValues,
   deleteSessionValues,
-  setSessionValues
+  setSessionValues,
 } from './sessionActions';
 
 export {clearLocalValues};
@@ -17,7 +17,7 @@ export {setLocalValues};
 const localActions = {
   clearLocalValues,
   deleteLocalValues,
-  setLocalValues
+  setLocalValues,
 };
 
 export {localActions};
@@ -29,12 +29,12 @@ export {setSessionValues};
 const sessionActions = {
   clearSessionValues,
   deleteSessionValues,
-  setSessionValues
+  setSessionValues,
 };
 
 export {sessionActions};
 
 export default {
   localActions,
-  sessionActions
+  sessionActions,
 };

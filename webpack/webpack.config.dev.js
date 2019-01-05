@@ -2,7 +2,6 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackDashboard = require('webpack-dashboard/plugin');
 
 const defaultConfig = require('./webpack.config');
 
@@ -18,20 +17,18 @@ module.exports = Object.assign({}, defaultConfig, {
     inline: true,
     lazy: false,
     noInfo: false,
-    quiet: false,
     port: PORT,
+    quiet: false,
     stats: {
       colors: true,
-      progress: true
+      progress: true,
     },
     watchOptions: {
-      ignored: /node_modules/
-    }
+      ignored: /node_modules/,
+    },
   },
 
-  entry: [
-    path.join(ROOT, 'DEV_ONLY', 'index.js')
-  ],
+  entry: [path.join(ROOT, 'DEV_ONLY', 'index.js')],
 
   module: Object.assign({}, defaultConfig.module, {
     rules: defaultConfig.module.rules.map((rule) => {
@@ -40,26 +37,18 @@ module.exports = Object.assign({}, defaultConfig, {
       }
 
       return Object.assign({}, rule, {
-        include: rule.include.concat([
-          path.join(ROOT, 'DEV_ONLY')
-        ]),
-        options: Object.assign({}, rule.options, {
-          presets: rule.options.presets.concat([
-            'react'
-          ])
-        })
+        include: rule.include.concat([path.join(ROOT, 'DEV_ONLY')]),
+        options: {
+          plugins: ['@babel/plugin-proposal-class-properties'],
+          presets: ['@babel/react'],
+        },
       });
-    })
+    }),
   }),
 
   output: Object.assign({}, defaultConfig.output, {
-    publicPath: `http://localhost:${PORT}/`
+    publicPath: `http://localhost:${PORT}/`,
   }),
 
-  plugins: defaultConfig.plugins.concat([
-    new HtmlWebpackPlugin(),
-    new WebpackDashboard({
-      port: 3210
-    })
-  ])
+  plugins: defaultConfig.plugins.concat([new HtmlWebpackPlugin()]),
 });
